@@ -36,7 +36,7 @@ class ExcelController extends Controller
         }
 
 
-        $tempFilePath = storage_path('app/temp/' . uniqid('edited_file_') . '.xlsx');
+        $tempFilePath = storage_path('app/temp/' . uniqid('edited_file_') . '.csv');
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         $writer->save($tempFilePath);
 
@@ -44,7 +44,7 @@ class ExcelController extends Controller
         $zipFilePath = storage_path('app/temp/' . uniqid('edited_file_') . '.zip');
         $zip = new ZipArchive();
         $zip->open($zipFilePath, ZipArchive::CREATE);
-        $zip->addFile($tempFilePath, 'data.xlsx');
+        $zip->addFile($tempFilePath, 'data.csv');
         $zip->close();
 
 

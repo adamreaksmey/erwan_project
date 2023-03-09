@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExcelController;
+use App\Http\Controllers\GuestsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/import', [ExcelController::class, 'import'])->name('import');
-
 Route::post('/export', [ExcelController::class, 'export'])->name('export');
+Route::apiResource('/guest' , GuestsController::class);
