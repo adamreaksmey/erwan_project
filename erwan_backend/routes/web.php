@@ -20,6 +20,5 @@ Route::get('/', function () {
 });
 
 Route::post('/import', [ExcelController::class, 'import'])->name('import');
-
 Route::post('/export', [ExcelController::class, 'export'])->name('export');
 Route::apiResource('/guest' , GuestsController::class);
