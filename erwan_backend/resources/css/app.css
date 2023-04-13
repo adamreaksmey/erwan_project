@@ -1,19 +1,26 @@
+html {
+    height: 100%;
+    background: url(https://png.pngtree.com/thumb_back/fw800/background/20210805/pngtree-modern-simple-elegant-cool-gradient-cream-landing-page-website-background-image_757446.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .button-group {
     display: inline-block;
-    }
-    .button-group form {
+}
+.button-group form {
     display: inline-block;
     border: 1px solid black;
     padding: 10px;
-    }
-    .button-group label {
+}
+.button-group label {
     display: block;
     margin-bottom: 5px;
-    }
-    .button-group input[type="file"] {
+}
+.button-group input[type="file"] {
     margin-bottom: 10px;
-    }
-    .button-group button {
+}
+.button-group button {
     background-color: #007bff;
     border: none;
     color: white;
@@ -25,7 +32,7 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
-    }
-    .button-group button:hover {
+}
+.button-group button:hover {
     background-color: #0056b3;
-    }
+}

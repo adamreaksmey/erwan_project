@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Imports\DataImport;
-use App\Models\ImportedFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use ZipArchive;
-use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Support\Facades\Storage;
 
 class ExcelController extends Controller
 {
@@ -15,12 +20,12 @@ class ExcelController extends Controller
     {
         try {
             DB::beginTransaction();
-            
+
             $file = $request->file('file');
             Excel::import(new DataImport, $file);
-            
+
             DB::commit();
-            
+
             return redirect()->back()->with('success', 'File imported successfully.');
         } catch (\Exception $e) {
             DB::rollback();
@@ -28,58 +33,43 @@ class ExcelController extends Controller
         }
     }
 
-    private function editFileWithExportedData($filePath, $data)
-    {
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filePath);
-        $worksheet = $spreadsheet->getActiveSheet();
-
-        // Write the exported data to the worksheet
-        $startRow = 6;
-        foreach ($data as $key => $row) {
-            $rowIndex = $key + $startRow;
-            $worksheet->setCellValue('A' . $rowIndex, $row->id);
-            $worksheet->setCellValue('B' . $rowIndex, $row->created_at);
-            $worksheet->setCellValue('C' . $rowIndex, $row->guest_name);
-            $worksheet->setCellValue('D' . $rowIndex, $row->guest_email);
-            $worksheet->setCellValue('E' . $rowIndex, $row->guest_phone_number);
-            $worksheet->setCellValue('F' . $rowIndex, $row->number_nights_stayed);
-        }
-
-        $tempFilePath = storage_path('app/temp/' . uniqid('edited_file_') . '.csv');
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-        $writer->save($tempFilePath);
-
-        $zipFilePath = storage_path('app/temp/' . uniqid('edited_file_') . '.zip');
-        $zip = new ZipArchive();
-        $zip->open($zipFilePath, ZipArchive::CREATE);
-        $zip->addFile($tempFilePath, 'data.csv');
-        $zip->close();
-
-        unlink($tempFilePath);
-
-        return $zipFilePath;
-    }
-
     public function export(Request $request)
     {
-        try {
-            DB::beginTransaction();
+        // Get the uploaded file and the number of copies to make
+        $file = $request->file('file');
+        $num_copies = $request->input('num_copies');
 
-            // Get the path of the existing file
-            $filePath = $request->file('file')->getPathname();
+        // Load the Excel file into a PHPExcel object
+        $spreadsheet = IOFactory::load($file);
 
-            // Get the data to export from the ImportedFile model
-            $data = ImportedFile::all();
-            // Edit the existing file with the exported data
-            $zipFilePath = $this->editFileWithExportedData($filePath, $data);
+        // Set the value of cell A1 to "Hello world"
+        $spreadsheet->getActiveSheet()->setCellValue('A1', 'Hello world');
 
-            DB::commit();
+        // Create a zip archive of the edited files
+        $zip = new ZipArchive;
+        $zip_name = Str::random(10) . '.zip';
+        if ($zip->open(storage_path('app/' . $zip_name), ZipArchive::CREATE) === TRUE) {
+            for ($i = 1; $i <= $num_copies; $i++) {
+                // Generate a random name for the file in the zip folder
+                $zip_file_name = Str::random(10) . '.xlsx';
 
-            // Download the edited file as a zip
-            return response()->download($zipFilePath)->deleteFileAfterSend(true);
-        } catch (\Exception $e) {
-            DB::rollback();
-            return redirect()->back()->with('error', 'An error occurred while exporting the file.');
+                // Save the edited file to a PHP output stream
+                $writer = new Xlsx($spreadsheet);
+                ob_start();
+                $writer->save('php://output');
+                $file_contents = ob_get_clean();
+
+                // Add the edited file to the zip folder with the random name
+                $zip->addFromString($zip_file_name, $file_contents);
+            }
+            $zip->close();
+
+            // Prompt the user to download the zip file
+            header("Content-Type: application/zip");
+            header("Content-Disposition: attachment; filename=$zip_name");
+            header("Content-Length: " . filesize(storage_path('app/' . $zip_name)));
+            readfile(storage_path('app/' . $zip_name));
+            exit;
         }
     }
 }

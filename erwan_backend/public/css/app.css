@@ -1,19 +1,35 @@
+html {
+    height: 100%;
+    background: url(https://scontent.fpnh10-1.fna.fbcdn.net/v/t39.30808-6/309581390_534135845378493_3750615598404299019_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=e3f864&_nc_ohc=woumFotQSVAAX_SykkN&_nc_ht=scontent.fpnh10-1.fna&oh=00_AfC7vZ2Hn97_VzZ6ABCYAnLSWJZGDIwX7gE-DXXZvr8R-A&oe=643CA481);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.all_form {
+    width: 55%;
+    height: 100%;
+    overflow: hidden;
+    background: #d1d1d1f2;
+    padding-bottom: 31px;
+    border-radius: 10px;
+}
+
 .button-group {
     display: inline-block;
-    }
-    .button-group form {
+}
+.button-group form {
     display: inline-block;
     border: 1px solid black;
     padding: 10px;
-    }
-    .button-group label {
+}
+.button-group label {
     display: block;
     margin-bottom: 5px;
-    }
-    .button-group input[type="file"] {
+}
+.button-group input[type="file"] {
     margin-bottom: 10px;
-    }
-    .button-group button {
+}
+.button-group button {
     background-color: #007bff;
     border: none;
     color: white;
@@ -25,7 +41,7 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
-    }
-    .button-group button:hover {
+}
+.button-group button:hover {
     background-color: #0056b3;
-    }
+}
