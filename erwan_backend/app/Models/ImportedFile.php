@@ -13,7 +13,9 @@ class ImportedFile extends Model
 
     protected $fillable = [
         'guest_name',
-        'number_nights_stayed'
+        'number_nights_stayed',
+        'total_revenue',
+        'reservation_number'
     ];
 }
 ?>

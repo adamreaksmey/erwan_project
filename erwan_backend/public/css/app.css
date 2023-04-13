@@ -1,12 +1,96 @@
 html {
     height: 100%;
-    background: url(https://scontent.fpnh10-1.fna.fbcdn.net/v/t39.30808-6/309581390_534135845378493_3750615598404299019_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=e3f864&_nc_ohc=woumFotQSVAAX_SykkN&_nc_ht=scontent.fpnh10-1.fna&oh=00_AfC7vZ2Hn97_VzZ6ABCYAnLSWJZGDIwX7gE-DXXZvr8R-A&oe=643CA481);
+    background: url("letigre_hotel.png");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
+.ok_button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+div#movable-div {
+    -webkit-box-reflect: below 0px
+        linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+}
+
+.export_form {
+    display: inline-block;
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 34px;
+    border-radius: 5px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+hr {
+    border-width: 0.01px;
+    margin-inline-end: 50%;
+    transform: translateX(50%);
+    border-color: #445c81;
+}
+
+.confirm_button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 6px 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline;
+    font-size: 11px;
+    overflow: hidden;
+    margin: -11px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+input#txt {
+    margin-bottom: 15px;
+    width: 23px;
+}
+
+.popup_msg {
+    width: 32%;
+    height: auto;
+    background: #57c843;
+    margin-top: 190px;
+    border-radius: 5px;
+    padding: 21px;
+    font-family: monospace;
+    font-size: 17px;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.default_file_btn {
+    background-color: #ff5a5a;
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    width: 50%;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
 .all_form {
-    width: 55%;
+    width: 1000px;
     height: 100%;
     overflow: hidden;
     background: #d1d1d1f2;
@@ -21,6 +105,8 @@ html {
     display: inline-block;
     border: 1px solid black;
     padding: 10px;
+    margin-bottom: 34px;
+    border-radius: 5px;
 }
 .button-group label {
     display: block;

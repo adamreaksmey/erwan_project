@@ -5,53 +5,75 @@ namespace App\Http\Controllers;
 use App\Imports\DataImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use ZipArchive;
+use Illuminate\Support\Facades\File;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Illuminate\Support\Facades\Storage;
+use App\Models\ImportedFile;
 
 class ExcelController extends Controller
 {
-    public function import(Request $request)
+    public function import(Request $request, ImportedFile $filedata)
     {
         try {
-            DB::beginTransaction();
-
             $file = $request->file('file');
+            if (!$file){
+                return redirect()->back()->with('error', 'Please choose a file to import');
+            }
             Excel::import(new DataImport, $file);
-
-            DB::commit();
-
+            $this->export($filedata);
             return redirect()->back()->with('success', 'File imported successfully.');
         } catch (\Exception $e) {
-            DB::rollback();
-            return redirect()->back()->with('error', 'An error occurred while importing the file.');
+            DB::rollBack();
+            return redirect()->back()->with('error', 'File import failed: ' . $e->getMessage());
         }
     }
 
-    public function export(Request $request)
+    public function export($filedata)
     {
-        // Get the uploaded file and the number of copies to make
-        $file = $request->file('file');
-        $num_copies = $request->input('num_copies');
+        $file = base_path("/storage/app/main_file/20220001685.xls");
+        $num_copies = count($filedata::all()) - 1;
 
-        // Load the Excel file into a PHPExcel object
         $spreadsheet = IOFactory::load($file);
-
-        // Set the value of cell A1 to "Hello world"
-        $spreadsheet->getActiveSheet()->setCellValue('A1', 'Hello world');
+        $guest_names = $filedata::all()->pluck('guest_name');
+        $invoice_number = $filedata::all()->pluck('reservation_number');
+        $current_date = now()->format('d/m/Y');
+        $room = "Room" . " " . rand(1, 19);
+        $nights_stayed = $filedata::all()->pluck('number_nights_stayed'); 
+        $price = $filedata::all()->pluck('total_revenue');
 
         // Create a zip archive of the edited files
         $zip = new ZipArchive;
-        $zip_name = Str::random(10) . '.zip';
+        $zip_name = now()->format('Ymd_His') . '.zip';
         if ($zip->open(storage_path('app/' . $zip_name), ZipArchive::CREATE) === TRUE) {
             for ($i = 1; $i <= $num_copies; $i++) {
                 // Generate a random name for the file in the zip folder
-                $zip_file_name = Str::random(10) . '.xlsx';
+                $zip_file_name = 'Guest' . $i . '.xlsx';
+                $worksheet = $spreadsheet->getActiveSheet();
+                $worksheet->getRowDimension(12)->setRowHeight(42);
+
+                // Set the height of column A13 to 23
+                $worksheet->getRowDimension(13)->setRowHeight(23);
+                
+                // Set the height of column A34 to 17
+                $worksheet->getRowDimension(34)->setRowHeight(17);
+
+                // Specify column
+                // $worksheet->getColumnDimension('Z')->getRowDimension(900)->setRowHeight(40);
+
+                // Set the value of cell A1 to the appropriate message
+                $message_index = $i - 1;
+                $spreadsheet->getActiveSheet()->setCellValue('A21', $guest_names[$message_index] ?? null);
+                $spreadsheet->getActiveSheet()->setCellValue('B15', $invoice_number[$message_index] ?? null);
+                $spreadsheet->getActiveSheet()->setCellValue('B17', $current_date);
+                $spreadsheet->getActiveSheet()->setCellValue('B21', $room);
+                $spreadsheet->getActiveSheet()->setCellValue('C21', $nights_stayed[$message_index] ?? null);
+                
+                $spreadsheet->getActiveSheet()->setCellValue('D21', $price[$message_index] ?? null);
+                $spreadsheet->getActiveSheet()->setCellValue('E21', $price[$message_index] ?? null);
+                $spreadsheet->getActiveSheet()->setCellValue('D34', $price[$message_index] ?? null);
+                $spreadsheet->getActiveSheet()->setCellValue('E34', $price[$message_index] ?? null);
 
                 // Save the edited file to a PHP output stream
                 $writer = new Xlsx($spreadsheet);
