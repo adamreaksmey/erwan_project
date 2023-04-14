@@ -23,4 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/import', [ExcelController::class, 'import'])->name('import');
 Route::post('/export', [ExcelController::class, 'export'])->name('export');
 Route::post('/storedefault', [ExcelController::class, 'storeDefaultFile'])->name('store');
+Route::get('/downloadsample', [ExcelController::class, 'downloadSampleFile'])->name('sample');
 Route::apiResource('/guest' , GuestsController::class);

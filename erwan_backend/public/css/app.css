@@ -42,15 +42,15 @@ hr {
 }
 
 .confirm_button1,
-    .confirm_button2,
-    .confirm_button3,
-    .confirm_button4,
-    .confirm_button5,
-    .confirm_button6,
-    .confirm_button7,
-    .confirm_button8,
-    .confirm_button9,
-    .confirm_button10 {
+.confirm_button2,
+.confirm_button3,
+.confirm_button4,
+.confirm_button5,
+.confirm_button6,
+.confirm_button7,
+.confirm_button8,
+.confirm_button9,
+.confirm_button10 {
     background-color: #007bff;
     border: none;
     color: white;
@@ -72,9 +72,11 @@ input#txt {
 
 .popup_msg {
     width: 32%;
+    transform: translateY(-132px);
     height: auto;
+    position: relative;
+    z-index: 9;
     background: #57c843;
-    margin-top: 190px;
     border-radius: 5px;
     padding: 21px;
     font-family: monospace;
@@ -123,6 +125,21 @@ input#txt {
 }
 .button-group input[type="file"] {
     margin-bottom: 10px;
+}
+
+.notsure_info {
+    font-family: system-ui;
+    font-size: 13px;
+    color: #574b1a;
+    margin-bottom: 10px;
+    text-decoration: underline;
+}
+
+.sample_download {
+    display: block !important;
+    border: none !important;
+    margin-bottom: 0px !important;
+    margin-top: -27px !important;
 }
 .button-group button {
     background-color: #007bff;

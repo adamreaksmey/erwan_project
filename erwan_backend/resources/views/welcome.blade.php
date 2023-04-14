@@ -34,6 +34,12 @@
             <button id="import-btn" type="submit">Import</button>
           </form>
 
+
+          <form class="sample_download" method="GET" action="{{ route('sample') }}">
+            <div class="notsure_info">If you're not sure about the guest name file format<br />Please see file format below</div>
+            <button id="import-btn" type="submit" style="background-color: black;">See sample file</button>
+          </form>
+
           <div
             class="default_file_btn"
             id="default_file_btn"

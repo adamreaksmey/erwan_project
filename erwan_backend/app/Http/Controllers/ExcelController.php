@@ -32,6 +32,11 @@ class ExcelController extends Controller
         }
     }
 
+    public function downloadSampleFile(){
+        $filePath = base_path('ErwanTestingFile/2022_December_Sale_report.xls');
+        return response()->download($filePath);
+    }
+
     public function storeDefaultFile(Request $request, User $user, Excelconfig $config){
         $file = $request->file('file');
         $filename = Str::random(20). '.'.$file->getClientOriginalExtension(); 
