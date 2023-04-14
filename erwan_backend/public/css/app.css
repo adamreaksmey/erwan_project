@@ -41,7 +41,16 @@ hr {
     border-color: #445c81;
 }
 
-.confirm_button {
+.confirm_button1,
+    .confirm_button2,
+    .confirm_button3,
+    .confirm_button4,
+    .confirm_button5,
+    .confirm_button6,
+    .confirm_button7,
+    .confirm_button8,
+    .confirm_button9,
+    .confirm_button10 {
     background-color: #007bff;
     border: none;
     color: white;
@@ -130,4 +139,13 @@ input#txt {
 }
 .button-group button:hover {
     background-color: #0056b3;
+}
+
+.error {
+    font-size: 11px;
+    position: relative;
+    transform: translate(-22px, -9px);
+    font-family: cursive;
+    text-decoration: underline;
+    color: red;
 }
