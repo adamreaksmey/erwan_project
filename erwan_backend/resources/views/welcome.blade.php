@@ -14,7 +14,8 @@
   <body>
     <center>
       <div class="all_form" id="movable-div">
-        <h1>Erwan Export</h1>
+        <h1 style="font-family: cursive;">Erwan Export</h1>
+        <h5>Version 1.0.0</h5>
         <div class="button-group">
           <form
             id="import-form"
