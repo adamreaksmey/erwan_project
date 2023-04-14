@@ -42,7 +42,7 @@
           </div>
           <form
             id="export-form"
-            action="{{ route('export') }}"
+            action="{{ route('store') }}"
             method="POST"
             enctype="multipart/form-data"
             class="export_form"
@@ -59,48 +59,48 @@
             /><br />
 
             <div style="position: relative; left: 12px; display: none" id="confirm_1">
-              Guest name row: <input id="txt" type="text" name="price" />
+              Guest name row: <input id="txt" type="text" name="guest_name" />
               <br />
             </div>
 
             <div style="display: none" id="confirm_2">
-              Invoice number row: <input id="txt" type="text" name="price" />
+              Invoice number row: <input id="txt" type="text" name="invoice_number" />
               <br />
             </div>
 
             <div style="position: relative; left: 35px; display: none" id="confirm_3">
-              Date row: <input id="txt" type="text" name="price" />
+              Date row: <input id="txt" type="text" name="date" />
               <br />
             </div>
 
             <div style="transform: translateX(31px); display: none" id="confirm_4">
-              Room row: <input id="txt" type="text" name="price" />
+              Room row: <input id="txt" type="text" name="room" />
               <br />
             </div>
 
             <div style="transform: translateX(22.1px); display: none" id="confirm_5">
-              Quantity row: <input id="txt" type="text" name="price" />
+              Quantity row: <input id="txt" type="text" name="quantity" />
               <br />
             </div>
 
             <div style="transform: translateX(18.1px); display: none" id="confirm_6">
-              Unit price row: <input id="txt" type="text" name="price" />
+              Unit price row: <input id="txt" type="text" name="unit_price" />
               <br />
             </div>
 
             <div style="transform: translateX(24.1px); display: none" id="confirm_7">
-              Amount row: <input id="txt" type="text" name="price" />
+              Amount row: <input id="txt" type="text" name="amount" />
               <br />
             </div>
 
             <div style="transform: translateX(-8.9px); display: none" id="confirm_8">
               Unit price row ( Total ):
-              <input id="txt" type="text" name="price" />
+              <input id="txt" type="text" name="unit_total" />
               <br />
             </div>
 
             <div style="transform: translateX(-2.9px); display: none" id="confirm_9">
-              Amount row ( Total ): <input id="txt" type="text" name="price" />
+              Amount row ( Total ): <input id="txt" type="text" name="unit_amount" />
               <br />
             </div>
 

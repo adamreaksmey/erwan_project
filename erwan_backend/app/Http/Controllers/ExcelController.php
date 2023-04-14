@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\File;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\ImportedFile;
+use App\Models\User;
+use Illuminate\Support\Str;
 
 class ExcelController extends Controller
 {
@@ -28,6 +30,20 @@ class ExcelController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', 'File import failed: ' . $e->getMessage());
         }
+    }
+
+    public function storeDefaultFile(Request $request, User $user){
+        $file = $request->file('file');
+        $filename = Str::random(20). '.'.$file->getClientOriginalExtension(); 
+        $file->move(base_path("/storage/app/main_file/"), $filename);
+
+        // fetch column values ...continue
+
+        $user->where('id', 1)->update([
+            'default_file' => $filename,
+        ]);
+
+        return response()->json('sucsess');
     }
 
     public function export($filedata)
