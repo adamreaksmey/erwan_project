@@ -15,7 +15,8 @@ class ImportedFile extends Model
         'guest_name',
         'number_nights_stayed',
         'total_revenue',
-        'reservation_number'
+        'reservation_number',
+        'payment_date'
     ];
 }
 ?>

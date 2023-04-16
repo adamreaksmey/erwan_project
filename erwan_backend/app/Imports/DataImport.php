@@ -31,7 +31,8 @@ class DataImport implements ToCollection
                 'reservation_number' => $reservation,
                 'guest_name' => $row[2],
                 'number_nights_stayed' => $row[5],
-                'total_revenue' => $total_revenue
+                'total_revenue' => $total_revenue,
+                'payment_date' => $row[1]
             ]);
         }
     }
